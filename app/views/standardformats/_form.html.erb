@@ -1,0 +1,33 @@
+<%= form_for(@standardformat) do |f| %>
+  <% if @standardformat.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@standardformat.errors.count, "error") %> prohibited this standardformat from being saved:</h2>
+
+      <ul>
+      <% @standardformat.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :timezone %><br>
+    <%= f.text_field :timezone %>
+  </div>
+  <div class="field">
+    <%= f.label :currency %><br>
+    <%= f.text_field :currency %>
+  </div>
+  <div class="field">
+    <%= f.label :unitsystemstring %><br>
+    <%= f.text_field :unitsystemstring %>
+  </div>
+  <div class="field">
+    <%= f.label :defaultweightunit %><br>
+    <%= f.text_field :defaultweightunit %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

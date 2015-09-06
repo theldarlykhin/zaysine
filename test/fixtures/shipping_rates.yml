@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  rate: MyString
+  paid_all_by_customer: MyString
+  paid_all_by_merchant: MyString
+  paid_by_merchant_if_purchase_amount_is: MyString
+
+two:
+  rate: MyString
+  paid_all_by_customer: MyString
+  paid_all_by_merchant: MyString
+  paid_by_merchant_if_purchase_amount_is: MyString

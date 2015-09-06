@@ -1,0 +1,44 @@
+<div id="sign_upbg">
+
+
+
+<div class="container">
+
+      <div class="col-md-4"></div>
+      <div class="col-md-4" id="merchan_signup_box">
+      <h2 id="st_title">Start your <span class="color1">Z</span>ay<span class="color1">S</span>ine</h2>
+          <div class="panel panel-default">
+              <div class="panel-body">
+                <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %><%= devise_error_messages! %>
+
+                <div class="field">
+                  <p>Email Address</p>
+                  <%= f.email_field :email, autofocus: true, :class => "form-control" %>
+                </div>
+                <br/>
+                <div class="field">
+                  <p>Password</p>
+                  <%= f.password_field :password, autocomplete: "off", :class => "form-control" %>
+                </div>
+                <br/>
+                <div class="field">
+                   <p>Password Confirmation</p>
+                  <%= f.password_field :password_confirmation,:class => "form-control", autocomplete: "off" %>
+                </div>
+                <br/>
+                <div class="actions">
+                  <%= f.submit "Sign up", :class=>"btn btn-default" %>
+                </div>
+
+              <% end %>
+              </div>
+          </div>
+         <a href="sign_in" id="st_title"> Already have an account?</a>
+           <%= link_to image_tag("fblogin.png", :alt => "Image Description", :class => "css"), '/api/users/auth/facebook?user=merchant'  %>
+       </div>
+      <div class="col-md-4"></div>
+</div>
+<br/><br/><br/><br/>
+<br/><br/><br/><br/>
+
+</div>

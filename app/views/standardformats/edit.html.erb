@@ -1,0 +1,112 @@
+
+<%= form_for(@standardformat) do |f| %>
+  <% if @standardformat.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@standardformat.errors.count, "error") %> prohibited this standardformat from being saved:</h2>
+
+      <ul>
+      <% @standardformat.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="row">
+    <h1>General
+    <%= f.submit 'Save' , :class => "btn btn-default", :style => "float:right;" %>
+    </h1>  
+    <hr/>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Standard & formats</h3>
+            <p>Standard & formats are used to calcualte such things
+            as product price shipping weight and the time an order was placed</p>
+        </div>
+        <div class="col-md-8">
+
+
+
+                                <div class="form-group">
+
+                                <table style="width:100%">
+                                      <tr>
+                                        <td style="padding-right:10px;">
+                                           <%= f.label :timezone %><br>
+    									   <%= f.text_field :timezone, :class => "form-control"  %>
+                                        </td>
+                                        <td>
+                                        	<%= f.label :currency %><br>
+   											<%= f.text_field :currency, :class => "form-control" %>
+                                        </td>
+                                      </tr>
+
+                                      <tr>
+                                        <td style="padding-right:10px;">
+                                            <%= f.label :unitsystemstring %><br>
+    										<%= f.text_field :unitsystemstring, :class => "form-control" %>
+                                        </td>
+                                      </tr>
+
+                                      <tr>
+                                        <td style="padding-right:10px;">
+                                             <%= f.label :defaultweightunit %><br>
+    										 <%= f.text_field :defaultweightunit, :class => "form-control" %>
+                                        </td>
+                                      </tr>
+                                     
+                                </table>
+                               
+                                </div>
+            </div>
+    </div>
+
+    <hr/>
+
+      <div class="row">
+        <div class="col-md-4">
+         
+        </div>
+        <div class="col-md-8">
+
+
+
+                                <div class="form-group">
+
+                                <table style="width:100%">
+                                <p>Edit order ID format (optional)</p>
+                                <h6>Order iD start at #00001 by default.You can add prefix or suffix here.</h6>
+                                      <tr>
+                                        <td style="padding-right:10px;">
+                                           <%= f.label :prefix %><br>
+    									   <%= f.text_field :prefix, :class => "form-control"  %>
+                                        </td>
+                                        <td>
+                                        	<%= f.label :suffix %><br>
+   											<%= f.text_field :suffix, :class => "form-control" %>
+                                        </td>
+                                      </tr>
+                                     
+     
+                                     
+                                </table>
+                                 <p>Your Order ID will be appear as..</p>
+
+                               
+                                </div>
+            </div>
+    </div>
+
+
+
+</div>
+              
+ 
+
+
+            
+
+
+<% end %>

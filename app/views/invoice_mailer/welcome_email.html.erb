@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <div style="background: white;">
+       <div>
+          <span style="text-align:center;"><%= image_tag "zaysine_logo.png" %></span>
+          <p style="float:right;"><%= @invoice.invoice_number %></p>
+       </div>
+       <br/>
+      <div style="background:#40c0cb;padding:120px;color:white;">
+        <h1>
+          Welcome to zaysine.com, Here is the shopping items for you.
+        </h1><br/>
+          <h2 style="text-align:center;color:white;">  
+            Item Name:<%= @invoice.item_name %>  | 
+            Item Price<%= @invoice.price %>
+          </h2>
+           <p style="text-align:center;color:white;"> To Purchase, just follow this link: <%= @url %>.</p>
+      </div>
+
+    </div>
+  </body>
+</html>
+
+

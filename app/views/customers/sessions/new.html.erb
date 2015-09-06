@@ -1,0 +1,40 @@
+<div id="sign_upbg">
+
+<div class="container">
+
+      <div class="col-md-4"></div>
+      <div class="col-md-4" id="merchan_signup_box">
+      <h2 id="st_title">Sign in <span class="color1">Customer</span></h2>
+          <div class="panel panel-default">
+              <div class="panel-body">
+                <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+                <div class="field">
+                  <p>Email Address</p>
+                  <%= f.email_field :email, autofocus: true, :class => "form-control" %>
+                </div>
+                <br/>
+                <div class="field">
+                  <p>Password</p>
+                  <%= f.password_field :password, autocomplete: "off", :class => "form-control" %>
+                </div>
+                <br/>
+                <div class="actions">
+                  <%= f.check_box :remember_me %>
+                  <%= f.label :remember_me %>   <%= f.submit "Sign in", :class=>"btn btn-default" %>
+               
+                </div>
+
+              <% end %>
+              </div>
+          </div>
+          <%= link_to image_tag("fblogin.png", :alt => "Image Description", :class => "css"), customer_omniauth_authorize_path(:facebook) %>
+       </div>
+      <div class="col-md-4"></div>
+</div>
+<br/><br/><br/><br/>
+<br/><br/><br/><br/>
+
+</div>
+
+

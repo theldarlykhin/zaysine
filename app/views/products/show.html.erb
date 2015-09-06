@@ -1,0 +1,68 @@
+
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">
+      Show Products
+    </h1>
+    <ol class="breadcrumb">
+      <li>
+          <a href="#">Dashboard</a>
+      </li>
+      <li class="active">
+           Show Form
+      </li>
+    </ol>
+  </div>
+</div>
+
+<div class="row">
+   <div class="col-lg-6">
+      <p id="notice"><%= notice %></p>
+
+            <div class="form-group">
+              <strong>Product name:</strong>
+              <%= @product.product_name rescue "-" %>
+            </div>
+
+            <p>
+              <strong>Desc:</strong>
+              <%= @product.desc rescue "-" %>
+            </p>
+
+            <p>
+              <strong>Inventory:</strong>
+              <%= @product.inventory rescue "-" %>
+            </p>
+
+            <p>
+              <strong>Brand:</strong>
+              <%= @product.brand.brand_name rescue "-" %>
+            </p>
+
+            <p>
+              <strong>Type:</strong>
+              <%= @product.category.category_name rescue "-" %>
+            </p>
+
+            <p>
+              <strong>Price:</strong>
+              <%= @product.price rescue "-" %>
+            </p>
+            <p>
+              <strong>Color:</strong>
+              <%= @product.option_value[0] rescue "-" %>
+            </p>
+
+            <p>
+              <strong>Store Name:</strong>
+              <%= @product.store.name rescue "-" %>
+            </p>
+      </div>  
+  <div class="col-lg-6"> 
+      <%= image_tag @product.avatar.url(:medium) %>
+  </div>
+</div>
+      <%= link_to 'Edit', edit_product_path(@product) %> |
+      <%= link_to 'Back', products_path %>
+
+

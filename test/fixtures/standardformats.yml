@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  timezone: MyString
+  currency: MyString
+  unitsystemstring: MyString
+  defaultweightunit: MyString
+
+two:
+  timezone: MyString
+  currency: MyString
+  unitsystemstring: MyString
+  defaultweightunit: MyString

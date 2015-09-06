@@ -1,0 +1,124 @@
+
+
+
+
+
+
+  <%= form_for(@store) do |f| %>
+                          <% if @store.errors.any? %>
+                            <div id="error_explanation">
+                              <h2><%= pluralize(@store.errors.count, "error") %> prohibited this store from being saved:</h2>
+
+                              <ul>
+                              <% @store.errors.full_messages.each do |message| %>
+                                <li><%= message %></li>
+                              <% end %>
+                              </ul>
+                            </div>
+                          <% end %>
+
+<div class="row">
+    <h1>General
+    <%= f.submit 'Save' , :class => "btn btn-default", :style => "float:right;" %>
+    </h1>  
+    <hr/>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Store detail</h3>
+            <p>Edit your store information.</p>
+        </div>
+        <div class="col-md-8">
+
+
+                                 <div class="form-group">
+                                        <label>Name</label><br>
+                                        <%= f.text_field :owner_name , :class => "form-control"%>
+                                </div>
+
+
+                                <div class="form-group">
+
+                                <table style="width:100%">
+                                      <tr>
+                                        <td style="padding-right:10px;">
+                                            <%= f.label :merchant_id %><br>
+                                            <%= f.text_field :merchant_id , :class => "form-control", :style =>"display:none;" %>
+
+                                             <input class="form-control" type="text" value="<%= current_merchant.email %>">
+                                             <p>Email used for zaysine to contact you about your
+                                             account</p>
+                                        </td>
+                                        <td>
+                                            <%= f.label :customer_email %><br>
+                                            <%= f.text_field :customer_email, :class => "form-control"  %>
+                                             <p>Your customer will see this email when you contact them( Example order confirmation )</p>
+                                        </td>
+                                      </tr>
+                                     
+                                </table>
+                               
+                                </div>
+
+            </div>
+    </div>
+    <hr/>
+      <div class="row">
+        <div class="col-md-4">
+            <h3>Store address</h3>
+            <p>This address will appear<br/> on your invoice and will be used<br>
+             to calculate your shipping rates.</p>
+        </div>
+        <div class="col-md-8">
+
+
+                                 <div class="form-group">
+                                        <%= f.label :name %><br>
+                                        <%= f.text_field :name , :class => "form-control"%>
+                                </div>
+
+
+                                <div class="form-group">
+                                        <%= f.label :phone %><br>
+                                        <%= f.text_field :phone , :class => "form-control"%>
+                                </div>
+
+                                <div class="form-group">
+                                        <%= f.label :street %><br>
+                                        <%= f.text_field :street , :class => "form-control"%>
+                                </div>
+
+                                <div class="form-group">
+
+                                <table style="width:100%">
+                                      <tr>
+                                        <td style="padding-right:10px;">
+                                            <%= f.label :city %><br>
+                                            <%= f.text_field :city , :class => "form-control" %>
+                                        </td>
+                                        <td>
+                                            <%= f.label :postal %><br>
+                                            <%= f.text_field :postal, :class => "form-control"  %>
+                                        </td>
+                                      </tr>
+                                     
+                                </table>
+                               
+                                </div>
+            </div>
+    </div>
+
+
+
+</div>
+              
+ 
+
+                    
+
+            
+
+
+<% end %>
+                 

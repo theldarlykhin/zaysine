@@ -1,0 +1,64 @@
+ <meta http-equiv="Access-Control-Allow-Origin" content="http://localhost:3000/"  />
+ <%= csrf_meta_tags %>
+
+ <%= stylesheet_link_tag    'bootstrap.min.css' %>
+
+<%= stylesheet_link_tag    'bootstrap.min.css' %>
+<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Customer</a>
+    </div>
+</nav>
+<br/><br/><br/>
+<div class="container">
+
+
+	
+	<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">Shopping Cart</h3>
+		    </div>
+		  <div class="panel-body">
+		  	<h3>Shipping Information</h3><hr/>
+			<table class="table table-striped">
+					<thead>
+		                <tr>
+		                  <th>Name</th>
+		                  <th>Quantity</th>
+		                  <th>Price</th>
+		                  <th></th>
+		                </tr>
+		              </thead>
+		              <tbody>
+		              	<%= render(@cart.line_items) %>
+		                <tr>
+		                  <th></th>
+		                  <th>Total</th>
+		                  <th><%= (@cart.total_price) %> Ks</th>
+		                  <th>&nbsp;</th>
+		                </tr>
+		            </tbody>
+            </table>
+           <div class="panel panel-default">
+				<div class="panel-body">
+		     		<%= link_to 'Empty cart', @cart, :method => :delete, :confirm => 'Are you sure?', :class => "btn btn-danger" %>
+		            <button type="button" class="btn btn-default" onclick="goBack()">Continue Shopping</button>
+		        	<%= link_to "Checkout", new_shipping_info_path, :class => "btn btn-info", :target => "_blank"  %>
+		        </div>
+           </div>
+           </div>
+         </div><!-- /.modal-content -->
+
+
+<script>
+	function goBack() {
+	    window.history.back();
+	}
+</script>

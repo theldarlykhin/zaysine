@@ -1,0 +1,119 @@
+<%= form_for(@shipping_rate) do |f| %>
+  <% if @shipping_rate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@shipping_rate.errors.count, "error") %> prohibited this shipping_rate from being saved:</h2>
+
+      <ul>
+      <% @shipping_rate.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="row">
+    <h1>Shipping
+    <%= f.submit 'Save' , :class => "btn btn-default", :style => "float:right;" %>
+    </h1>  
+    <hr/>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Fees</h3>
+            <p>Configure additional rates</p>
+        </div>
+        <div class="col-md-8">
+
+            <div class="form-group">
+              <label>Rate</label><br>
+              <%= f.text_field :rate, :class => "form-control"  %>
+            </div>
+
+
+            <div class="form-group">
+              <%= f.text_field :store_id, :class => "form-control", :value => current_merchant.store_name, :style => "display:none;" %>
+              <%= f.text_field :paid_method, :style => "display:none;" %>
+              <table style="width:100%">
+                <tr>
+                  <td style="padding-right:10px;">
+                    <%= radio_button_tag :paid_method, "paid_all_by_customer" %>
+                    <%= label_tag(:paid_all_by_customer, "Paid all by customer") %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= radio_button_tag :paid_method, "paid_all_by_merchant" %>
+                    <%= label_tag(:paid_all_by_merchant, "Paid all by merchant") %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= radio_button_tag :paid_method, "paid_by_merchant_if_purchase_amount_is" %>
+                    <%= label_tag(:paid_by_merchant_if_purchase_amount_is, "Paid by merchant if purchase amount is") %>
+                    <%= f.text_field :amount %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+
+            <div class="form-group">
+              <label>Convenience Fees</label><br>
+              <%= f.text_field :convenience_fee, :class => "form-control"  %>
+            </div>
+
+
+            <div class="form-group">
+              <%= f.text_field :paidmethod_for_convenience_fee, :style => "display:none;" %>
+              <table style="width:100%">
+                <tr>
+                  <td style="padding-right:10px;">
+                    <%= radio_button_tag :paidmethod_for_convenience_fee, "paid_all_by_customer" %>
+                    <%= label_tag(:paid_all_by_customer, "Paid all by customer") %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= radio_button_tag :paidmethod_for_convenience_fee, "paid_all_by_merchant" %>
+                    <%= label_tag(:paid_all_by_merchant, "Paid all by merchant") %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= radio_button_tag :paidmethod_for_convenience_fee, "paid_by_merchant_if_purchase_amount_is" %>
+                    <%= label_tag(:paid_by_merchant_if_purchase_amount_is, "Paid by merchant if purchase amount is") %>
+                    <%= f.text_field :amount_for_convenience_fee %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+<% end %>
+
+
+<script type="text/javascript">
+  $("#paid_method_paid_all_by_customer").on('click',function(){
+    $("#shipping_rate_paid_method").val("paid_all_by_customer");
+  });
+  $("#paid_method_paid_all_by_merchant").on('click', function(){
+    $("#shipping_rate_paid_method").val("paid_all_by_merchant");
+  });
+  $("#paid_method_paid_by_merchant_if_purchase_amount_is").on('click',function() {
+    $("#shipping_rate_paid_method").val("paid_by_merchant_if_purchase_amount_is");
+  });
+  $("#paidmethod_for_convenience_fee_paid_all_by_customer").on('click',function(){
+    $("#shipping_rate_paidmethod_for_convenience_fee").val("paid_all_by_customer");
+  });
+  $("#paidmethod_for_convenience_fee_paid_all_by_merchant").on('click', function(){
+    $("#shipping_rate_paidmethod_for_convenience_fee").val("paid_all_by_merchant");
+  });
+  $("#paidmethod_for_convenience_fee_paid_by_merchant_if_purchase_amount_is").on('click',function() {
+    $("#shipping_rate_paidmethod_for_convenience_fee").val("paid_by_merchant_if_purchase_amount_is");
+  });
+
+</script>

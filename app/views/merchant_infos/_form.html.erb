@@ -1,0 +1,52 @@
+<%= form_for(@merchant_info) do |f| %>
+  <% if @merchant_info.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@merchant_info.errors.count, "error") %> prohibited this merchant_info from being saved:</h2>
+
+      <ul>
+      <% @merchant_info.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :account_email %><br>
+    <%= f.text_field :account_email %>
+  </div>
+  <div class="field">
+    <%= f.label :customer_email %><br>
+    <%= f.text_field :customer_email %>
+  </div>
+  <div class="field">
+    <%= f.label :storename %><br>
+    <%= f.text_field :storename %>
+  </div>
+  <div class="field">
+    <%= f.label :phone %><br>
+    <%= f.text_field :phone %>
+  </div>
+  <div class="field">
+    <%= f.label :street %><br>
+    <%= f.text_field :street %>
+  </div>
+  <div class="field">
+    <%= f.label :city %><br>
+    <%= f.text_field :city %>
+  </div>
+  <div class="field">
+    <%= f.label :postal %><br>
+    <%= f.text_field :postal %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+

@@ -1,0 +1,39 @@
+<h1>Listing merchant_infos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Account email</th>
+      <th>Customer email</th>
+      <th>Storename</th>
+      <th>Phone</th>
+      <th>Street</th>
+      <th>City</th>
+      <th>Postal</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @merchant_infos.each do |merchant_info| %>
+      <tr>
+        <td><%= merchant_info.name %></td>
+        <td><%= merchant_info.account_email %></td>
+        <td><%= merchant_info.customer_email %></td>
+        <td><%= merchant_info.storename %></td>
+        <td><%= merchant_info.phone %></td>
+        <td><%= merchant_info.street %></td>
+        <td><%= merchant_info.city %></td>
+        <td><%= merchant_info.postal %></td>
+        <td><%= link_to 'Show', merchant_info %></td>
+        <td><%= link_to 'Edit', edit_merchant_info_path(merchant_info) %></td>
+        <td><%= link_to 'Destroy', merchant_info, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Merchant info', new_merchant_info_path %>

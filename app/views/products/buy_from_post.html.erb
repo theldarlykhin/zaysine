@@ -1,0 +1,187 @@
+<meta http-equiv="Access-Control-Allow-Origin" content="http://localhost:3000/"  />
+<%= csrf_meta_tags %>
+<%= stylesheet_link_tag    'bootstrap.min.css' %>
+<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Customer</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+            <% if customer_signed_in? %>
+                    <%= link_to "Log out", destroy_customer_session_path, :method => :delete,  :class =>"btn btn-default navbar-btn"  %>
+           <% end %>
+    </div>
+</nav>
+<br/><br/>
+<div class="container">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          Check out
+        </h3>
+      </div>
+      <div class="panel-body">
+        <h3>Order Information</h3><hr/>
+        <table class="table table-striped">
+             
+                <tr>
+                  <td>Product Name</td>
+                  <td><%= @product.product_name rescue "-" %></td>
+                </tr>
+
+                <tr>
+                  <td>Product Brand</td>
+                  <td><%= @product.brand.brand_name rescue "-" %></td>
+                </tr>
+
+                <tr>
+                  <td>Product Type</td>
+                  <td><%= @product.category.category_name rescue "-" %></td>
+                </tr>
+
+                <tr>
+                  <td>Product Color</td>
+                  <td><%= @product.color rescue "-" %></td>
+                </tr>
+
+                <tr>
+                  <td>Product Price</td>
+                  <td><%= @product.price rescue "-" %></td>
+                </tr>
+
+               
+
+            </table>
+        <br/>
+      
+        <table class="table table-striped">
+             
+              
+               
+
+        </table>
+
+<!--  -->
+<form method="post" action="https://demo2.2c2p.com/2C2PFrontEnd/RedirectV3/payment">
+  <div style="display:none;">
+  <input type="text" id="version" name="version" value="6.0"/>
+  <input type="text" id="merchant_id" name="merchant_id" value="MM0003"/>
+  <input type="text" id="payment_description" name="payment_description" value="" />
+  <input type="text" id="order_id" name="order_id" value="00000000000000123456" />
+  <input id="invoice_no" name="invoice_no" type="text" value="1234567890" />
+  <input id="currency" name="currency" type="text" value=""/>
+  <input id="amount" name="amount" type="text" value="<%= @product.price %>"/>
+  <input type="text" id="customer_email" name="customer_email" value="<%=  current_customer.email %>"/>
+  <input type="text" id="pay_category_id" name="pay_category_id" value=""/>
+  <input type="text" id="promotion" name="promotion" value=""/>
+  <input type="text" id="user_defined_1" name=" user_defined_1" value=""/>
+  <input type="text" id="user_defined_2" name=" user_defined_2" value=""/>
+  <input type="text" id="user_defined_3" name=" user_defined_3" value=""/>
+  <input type="text" id="user_defined_4" name=" user_defined_4" value=""/>
+  <input type="text" id="user_defined_5" name=" user_defined_5" value=""/>
+  <input type="text" id="result_url_1" name="result_url_1" value=""/>
+  <input type="text" id="result_url_2" name="result_url_2" value=""/>
+  <input type="hidden" id="hash_value" name="hash_value"  /> 
+       
+  </div>     
+  <input type="Submit" class="btn btn-primary" name="btnSubmit" value="Submit" id="btnSubmit" />
+
+</form>
+
+<!--  -->
+
+
+      </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://crypto-js.googlecode.com/files/2.0.0-crypto-sha1.js"></script>
+<script type="text/javascript" src="https://crypto-js.googlecode.com/files/2.0.0-hmac-min.js"></script>
+
+<script type="text/javascript">
+window.onload = function () {
+      
+
+   var amount  = document.getElementById('amount').value;
+
+   if (amount.length == 1) {
+      var concattotal = "000000000" + amount
+   }
+    else if (amount.length == 2) {
+      var concattotal = "00000000" + amount
+    }
+    else if (amount.length == 3) {
+      var concattotal = "0000000" + amount
+    }
+    else if (amount.length == 4) {
+      var concattotal = "000000" + amount
+    }
+    else if (amount.length == 5){
+      var concattotal = "00000" + amount
+    }
+    else if (amount.length == 6){
+      var concattotal = "0000" + amount
+    }
+    else if (amount.length == 7){
+      var concattotal = "000" + amount
+    }
+    else if (amount.length == 8){
+      var concattotal = "00" + amount
+    }
+    else if (amount.length == 9) {
+      var concattotal = "0" + amount
+    }
+    else if (amount.length == 10){
+      var concattotal = amount
+    }
+
+    var my_amount = concattotal+"00";
+    document.getElementById('amount').value = my_amount;
+
+
+}
+
+
+    $("#btnSubmit").click(function(){
+   
+ var key = "VUPPfF8isnhH";
+ var version = document.getElementById('version').value;
+ var merchant_id = document.getElementById('merchant_id').value;
+ var payment_description = "";
+ var order_id = document.getElementById('order_id').value;
+ var invoice_no  = document.getElementById('invoice_no').value;
+ var currency  = "";
+ var my_amount  = document.getElementById('amount').value;
+ var customer_email = document.getElementById('customer_email').value;
+ var pay_category_id = "";
+ var promotion = "";
+ var user_defined_1 = "";
+ var user_defined_2 = "";
+ var user_defined_3 = "";
+ var user_defined_4 = "";
+ var user_defined_5 = "";
+ var result_url_1 = ""; 
+ var result_url_2 = "";
+
+
+var raw_data = version+merchant_id+payment_description+order_id+invoice_no+currency+my_amount+customer_email+pay_category_id+promotion+user_defined_1+user_defined_2+user_defined_3+user_defined_4+user_defined_5+result_url_1+result_url_2;
+
+
+
+var hmac = Crypto.HMAC(Crypto.SHA1, raw_data, key);
+document.getElementById('hash_value').value = hmac;
+
+    });
+
+
+</script>
+
+
+

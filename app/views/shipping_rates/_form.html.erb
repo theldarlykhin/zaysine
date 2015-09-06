@@ -1,0 +1,33 @@
+<%= form_for(@shipping_rate) do |f| %>
+  <% if @shipping_rate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@shipping_rate.errors.count, "error") %> prohibited this shipping_rate from being saved:</h2>
+
+      <ul>
+      <% @shipping_rate.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :rate %><br>
+    <%= f.text_field :rate %>
+  </div>
+  <div class="field">
+    <%= f.label :paid_all_by_customer %><br>
+    <%= f.text_field :paid_all_by_customer %>
+  </div>
+  <div class="field">
+    <%= f.label :paid_all_by_merchant %><br>
+    <%= f.text_field :paid_all_by_merchant %>
+  </div>
+  <div class="field">
+    <%= f.label :paid_by_merchant_if_purchase_amount_is %><br>
+    <%= f.text_field :paid_by_merchant_if_purchase_amount_is %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

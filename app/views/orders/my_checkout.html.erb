@@ -1,0 +1,366 @@
+ <meta http-equiv="Access-Control-Allow-Origin" content="http://localhost:3000/"  />
+ <%= csrf_meta_tags %>
+
+ <%= stylesheet_link_tag    'bootstrap.min.css' %>
+
+<%= stylesheet_link_tag    'bootstrap.min.css' %>
+<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Customer</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+            <% if customer_signed_in? %>
+                    <%= link_to "Log out", destroy_customer_session_path, :method => :delete,  :class =>"btn btn-default navbar-btn"  %>
+           <% end %>
+    </div>
+</nav>
+<br/><br/><br/>
+<div class="container">
+
+
+	
+	<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">
+		      Check out
+		    </h3>
+		  </div>
+		  <div class="panel-body">
+		  <h3>Shipping Information</h3><hr/>
+			<table class="table table-striped">
+			       
+			          <tr>
+			            <td>Full Name</td>
+			            <td><%=  @full_name %></td>
+			          </tr>
+
+			          <tr>
+			            <td>Contact Number</td>
+			            <td><%= @contact_number %></td>
+			          </tr>
+
+			          <tr>
+			            <td>Email</td>
+			            <td><%=  @email %></td>
+			          </tr>
+
+			          <tr>
+			            <td>City</td>
+			            <td><%=  @city %></td>
+			          </tr>
+
+			          <tr>
+			            <td>Township</td>
+			            <td><%=  @city %></td>
+			          </tr>
+
+
+			          <tr>
+			            <td>Address</td>
+			            <td><%=  @shipping_address %></td>
+			          </tr>
+
+			      </table>
+			<h3>	Order Information 
+					<span style="float:right;color:blue;">InvoiceNumber: <%=  @invoice_no %></span>
+			</h3>
+			<hr/>
+			 <table class="table table-striped">
+		              <thead>
+		                <tr>
+
+		                  <th>Name</th>
+		                  <th>Quantity</th>
+		                  <th>Price</th>
+		                  <th></th>
+		                </tr>
+		              </thead>
+		              <tbody>
+		                 <% @line_items.each do |line_item| %>
+			              	<tr>
+							    <td><%= line_item.product.product_name %></td>
+								<td><%= line_item.quantity %></td>
+								<td>
+									<%= (line_item.total_price) %> MMK
+									 <input id="price<%= line_item.id %>" value="<%= line_item.total_price %>" style="display:none;">
+								</td>
+								<td></td>
+							</tr>
+						 <% end %>
+						<tr>
+		                  <th></th>
+		                  <th>Shipping Cost</th>
+		                  <th>
+		                  	<%=  @rate %> MMK
+		                  </th>convenience_fee
+		                  <th>&nbsp;</th>
+		                </tr>
+
+						<tr>
+		                  <th></th>
+		                  <th>Convenience Fees</th>
+		                  <th>
+		                  	<%=  @convenience_fee %> MMK
+		                  </th>
+		                  <th>&nbsp;</th>
+		                </tr>
+
+		                <tr>
+		                  <th> 
+		                  
+		                  </th>
+		                  <th>Total</th>
+		                  <th >
+		                  	<input id="total_price" disabled value="<%=  @total %> MMK" >
+		                  </th>
+		                  <th>&nbsp;</th>
+		                </tr>
+		              </tbody>
+            	</table>
+
+
+            	<form method="post" action="https://demo2.2c2p.com/2C2PFrontEnd/RedirectV3/payment">
+            			<div style="display:none;">
+
+								<input type="text" id="version" name="version" value="6.0"/>
+								<input type="text" id="merchant_id" name="merchant_id" value="MM0003"/>
+								<input type="text" id="payment_description" name="payment_description"
+								value="" />
+								<input type="text" id="order_id" name="order_id" value="00000000000000123456" />
+								<input id="invoice_no" name="invoice_no" type="text" value="<%= @invoice_no %>" />
+								<input id="currency" name="currency" type="text" value=""/>
+								<input id="amount" name="amount" type="text" value="<%=  @amount %>"/>
+								<input type="text" id="customer_email" name="customer_email"
+								value="<%=  @email %>"/>
+								<input type="text" id="pay_category_id" name="pay_category_id" value=""/>
+								<input type="text" id="promotion" name="promotion" value=""/>
+								<input type="text" id="user_defined_1" name=" user_defined_1" value=""/>
+								<input type="text" id="user_defined_2" name=" user_defined_2" value=""/>
+								<input type="text" id="user_defined_3" name=" user_defined_3" value=""/>
+								<input type="text" id="user_defined_4" name=" user_defined_4" value=""/>
+								<input type="text" id="user_defined_5" name=" user_defined_5" value=""/>
+								<input type="text" id="result_url_1" name="result_url_1" value=""/>
+								<input type="text" id="result_url_2" name="result_url_2" value=""/>
+								<input type="hidden" id="hash_value" name="hash_value" value="<%=  @aok %>" />
+
+					    </div>
+
+					
+						    	<div class="panel panel-default">
+								  <div class="panel-body">
+								   
+
+								     <h4>
+								     Online Payment
+								     <input type="radio" id="online" name="payment" value="online">
+								     </h4>
+
+								      <h4> 
+								      Offline Payment
+								      <input type="radio" id="offline" name="payment" value="offline" >
+								      </h4>
+								  
+								  
+								  </div>
+								</div>
+						   
+						     	<div class="panel panel-default">
+								  <div class="panel-body">
+								   
+
+								   	 <input type="Submit" class="btn btn-primary" name="btnSubmit" value="Submit" id="btnSubmit"
+								   	 style="display:none;" />
+								   
+								   		<%= link_to 'Submit', sent_to_order_path(
+								   		:customer_name => @full_name, 
+								   		:customer_phone => @contact_number,
+								   		:customer_email => @email, 
+								   		:customer_city =>  @city, 
+								   		:customer_township =>  @city, 
+								   		:customer_address =>  @shipping_address,
+								   		:purchase_item => @line_items.each do |line_item| 
+								   								line_item.product.product_name 
+								   							end
+								   						  ), 
+								   		:method => "post", :id => "ofline_btn",:class => "btn btn-primary" %>
+							
+								  </div>
+								</div>
+						   
+
+					 
+
+
+						
+					
+
+				</form>
+
+
+				
+
+		  </div>
+	</div>
+
+
+
+
+</div>
+
+<script type="text/javascript">
+
+$('#online').click(function() {
+	$( "#btnSubmit" ).show();
+	$( "#ofline_btn" ).hide();
+
+});
+
+$('#offline').click(function() {
+    $( "#btnSubmit" ).hide();
+	$( "#ofline_btn" ).show();
+});
+
+
+
+</script>
+
+
+
+  <script>
+
+
+// function checkout() {
+
+// 		$.ajax({
+//             url: 'https://demo2.2c2p.com/2C2PFrontEnd/RedirectV3/payment',
+//            	beforeSend: function(xhr) {
+// 			    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+// 			  },
+// 			  xhrFields: {
+// 			    withCredentials: true
+// 			  },
+//             headers: {
+// 	        	'Accept': 'application/json',
+// 	        	'Content-Type': 'text/javascript',
+// 	        	'Content-Type': 'application/javascript',
+// 	        	'Content-Type': 'text/javascript; charset=UTF-8',
+// 	        	'Content-Type': 'application/json',	
+// 	        	'mimetype': 'application/javascript',
+// 	        	'Content-Type': '*',
+//         		'Content-Type': 'text/plain',
+//         		'Access-Control-Allow-Origin' : 'http://localhost:3000/',
+        	
+//     		},
+//     		withCredentials: true,
+// 		    type: 'POST',
+// 		    crossDomain: true, // enable this
+// 		    contentType: 'application/json',
+// 		    dataType: 'jsonp',
+// 		   	data: JSON.stringify({
+//     					"version" : "6.0",
+// 						"merchant_id" : "MM0003",
+// 						"payment_description" : "",
+// 						"order_id" : "00000000000000123456",
+// 						"invoice_no" : "",
+// 						"currency" : "",
+// 						"amount" : "000000010050",
+// 						"customer_email" : "tester@test.com",
+// 						"pay_category_id" : "",
+// 						"promotion" : "",
+// 						"user_defined_1" : "",
+// 						"user_defined_2": "",
+// 						"user_defined_3": "",
+// 						"user_defined_4": "",
+// 						"user_defined_5": "",
+// 						"result_url_1" : "",
+// 						"result_url_2": "",
+// 						"hash_value" : "a60cf00544f94b74af0f299a55220e6a217c4126"
+
+//     		}),
+	
+
+
+// 		    success: function() { alert("Success"); },
+// 		    error: function() { alert('Failed!'); },
+		   
+
+// 		});
+
+// };
+
+
+
+
+
+ </script>
+
+ <script>
+
+
+// function checkout() {
+
+// 		var xhr = new XMLHttpRequest();
+// 		xhr.open('POST', 'https://demo2.2c2p.com/2C2PFrontEnd/RedirectV3/payment');
+// 		xhr.withCredentials = true;
+// 		xhr.setRequestHeader('Content-Type', 'text/plain');
+// 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); 
+// 		xhr.setRequestHeader('Content-Type', 'application/json');
+// 		xhr.send(JSON.stringify({
+// 		    		version: "6.0",
+// 					merchant_id: "MM0003",
+// 					payment_description: "",
+// 					order_id: "00000000000000123456",
+// 					invoice_no: "",
+// 					currency: "",
+// 					amount: "000000010050",
+// 					customer_email: "tester@test.com",
+// 					pay_category_id: "",
+// 					promotion: "",
+// 					user_defined_1: "",
+// 					user_defined_2: "",
+// 					user_defined_3: "",
+// 					user_defined_4: "",
+// 					user_defined_5: "",
+// 					result_url_1: "",
+// 					result_url_2: "",
+// 					hash_value: "a60cf00544f94b74af0f299a55220e6a217c4126"
+// 		}));
+
+// };
+
+ </script>
+
+
+ <script>
+
+
+$( document ).ready(function() {
+    var total = 0;
+   	<% @line_items.each do |line_item| %>
+
+  		var item_price = document.getElementById("price<%= line_item.id %>").value;
+		total = parseInt(item_price) + parseInt(total);
+    	document.getElementById("total_price").value = total; 
+
+    <% end %>
+
+     // document.getElementById("amount").value = document.getElementById("total_price").value; 
+
+
+
+
+});
+
+</script>
+
+
+			    
+
+		

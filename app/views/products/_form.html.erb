@@ -1,0 +1,477 @@
+<!-- <input id="AccessToken" type="text" value="" /> -->
+<div id="fb-root"></div>
+<script src="https://connect.facebook.net/en_US/all.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script> 
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        FB.init({ 
+            appId: '404381443062412', 
+            cookie: true, 
+            xfbml: true, 
+            status: true });
+
+        FB.getLoginStatus(function (response) {
+            if (response.authResponse) {
+                $('#AccessToken').val(response.authResponse.accessToken);
+
+
+                 $.ajax({
+                    url: "https://graph.facebook.com/oauth/access_token?",
+                    type: "GET",
+                    data: { grant_type: "fb_exchange_token",
+                            client_id: "404381443062412", 
+                            client_secret: "77fa8c5a4dae13075bd8211cc6499e26", 
+                            fb_exchange_token: response.authResponse.accessToken},
+                    crossDomain: true,
+                    success:function(result){
+                        var myToken = result.replace("access_token=", "");
+                        // alert(myToken);
+                         $('#AccessToken').val(myToken);
+                          $.ajax({
+                              url: "https://graph.facebook.com/me/accounts?",
+                              type: "GET",
+                              data: { access_token: myToken},
+                              crossDomain: true,
+                              success:function(result2){
+
+                                var obj = $.parseJSON(JSON.stringify(result2));
+                                var arr = obj['data'];
+                                
+                                  var i;
+                                  var page_name = [];
+                                  var page_id = [];
+                                  var page_access_token = [];
+                                  for (i = 0; i < arr.length; i++) {
+                                      var arr_json = $.parseJSON(JSON.stringify(arr[i]));
+                                      page_name.push(arr_json['name']);
+                                      page_id.push(arr_json['id']);
+                                      page_access_token.push(arr_json['access_token']);
+                                  }
+                         
+
+                                 var j;
+                                 for (j = 0; j < arr.length; j++) {
+                                    
+                                    var radio = document.createElement('input');
+                                    radio.setAttribute("class", "rdo_name");
+                                    radio.setAttribute("type", "radio");
+                                    radio.setAttribute("name", "optionsRadios");
+                                    radio.setAttribute("id", "optionsRadios" + j);
+                                    radio.value = page_access_token[j]+","+page_id[j];
+                                    var lblYes = document.createElement("font");
+                                    var textYes = document.createTextNode(page_name[j]);
+                                    lblYes.appendChild(textYes);
+                                    var spaceBr= document.createElement("br");
+                                    radio.onclick = function(){ 
+                                      var raw_val  = $('input[name="optionsRadios"]:checked').val();
+                                      var page_token = raw_val.split(',')[0]; 
+                                      var page_id = raw_val.split(',')[1];
+                                      document.getElementById("product_token").value = page_token;
+                                      document.getElementById("product_page").value = page_id;
+                                    };
+                                    document.getElementById("myDIV").appendChild(radio);
+                                    document.getElementById("myDIV").appendChild(lblYes);
+                                    document.getElementById("myDIV").appendChild(spaceBr);
+                                    
+                                 }                                  
+                                   $('#AccessToken').val(page_access_token[1]);
+                                   
+
+                              }
+                        });
+                          
+                    },
+                    error:function(xhr,status,error){
+                        alert(status);
+                    }
+                });
+            } else {
+            }
+        });
+
+    });
+
+    
+</script>
+
+      <%= form_for @product, :html => { :multipart => true} do |f| %>
+
+        <% if @product.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+            <ul>
+            <% @product.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+<div class="row">
+    <h1>Add a Product
+      <%= f.submit 'Save' , :class => "btn btn-default", :style => "float:right;" %>
+    </h1>
+
+
+    <hr/>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Product details</h3>
+            <p>Write a name and description, and provide a type and vendor to categories the product.</p>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+              <%= f.text_area :token, :class => "form-control", :style => "display:none;"  %>
+            </div>
+
+            <div class="form-group">
+             <%= f.text_field :page, :class => "form-control", :style => "display:none;" %>
+
+                 <%= f.text_field :product_name, :class => "form-control", :required =>"required"  %>
+            <!--<%= current_merchant.store_name %> -->
+              <%= f.label :product_name %><br>
+              <%= f.text_field :product_name, :class => "form-control", :required =>"required"  %>
+              <%= f.text_field :store_id, :class => "form-control", :value => current_merchant.store_name, :style => "display:none;" %>
+            </div>
+            <div class="form-group">
+              <label>Information provide in FB</label><br>
+              <%= f.text_area :desc, :class => "form-control"  %>
+            </div>
+
+            <div class="form-group">
+              <table style="width:100%">
+                <tr>
+                  <td style="padding-right:10px;">
+                    <%= f.label :category_id%><br>
+                    <%= f.select :category_id, Category.all.collect { |c| [c.category_name, c.id] }%>
+                  </td>
+                  <td>
+                    <%= f.label :brand_id %><br>
+                    <%= f.select :brand_id, Brand.all.collect { |c| [c.brand_name, c.id] } %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+        </div>
+    </div>
+    <hr/>
+
+        <div class="row">
+        <div class="col-md-4">
+            <h3>Inventory & variants</h3>
+            <p>Manage inventory, and configure the options for selling this product.</p>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group" id="inventory_chk">
+              <%= f.label :price %><br>
+              <%= f.text_field :price, :placeholder => "0.00", :required =>"required" %>
+            </div>
+            <div class="form-group" id="inventory_chk">
+              <%= f.label :SKU %> (Stock Keeping Unit)<br>
+              <%= f.text_field :sku %>
+            </div>
+            <div class="form-group">
+              <table style="width:100%">
+                <tr>
+                  <td style="padding-right:10px;width:30%;"  id="inventory_chk">
+                    <%= f.label :inventory_policy %><br/>
+                    <%= f.select(:inventory_policy, Product::INVENTORY_POLICY) %>
+                  </td>
+                  <td  id="inventory_chk">
+                    <%= f.label :quantity, :id => "p_qty" , :style => "visibility:hidden;" %><br>
+                    <%= f.text_field :inventory, :style => "visibility:hidden;" %>
+                  </td>
+                </tr>
+              </table>
+              
+            </div>
+            <div class="form-group" id="div_allow_purchase" style="display:none;">
+              <%= check_box_tag 'allow_purchase' %>Allow customers to purchase this product when it's out of stock
+            </div>
+
+
+            <div class="form-group" style="height:30%;">
+              <%= check_box_tag 'accept' %>This product has multiple options.
+            </div>
+
+          <div id="option" style="display:none;"> <!-- change this visibility:hidden; -->
+              <div class="col-lg-4" id="option_add">
+                <%= f.label :option_name %><br>
+              </div>
+              <div class="col-lg-8" id="option_add">
+                  <%= f.label :option_value %><br>
+              </div>
+
+           
+ 
+          <div id="add">
+            <div id="option0">
+              <div class="col-lg-4" id="option_add">
+                <div class="form-group">
+
+                    <input type="text" id="option_name" name="product[option_name][]" value="Size">
+                  
+                </div>
+              </div>
+              <div class="col-lg-8" id="option_add">
+                <div class="form-group">
+                  <div id="cm_seprated" class="col-lg-8">
+                        <input id="txt_option_value0" type="text" value="" placeholder="Add a tag" />
+                  </div>
+
+                     <!--  <div class="col-lg-4">
+                        <label class="btn btn-default" onclick="remove_div0()">X</label>
+                      </div> -->
+                  <%= f.text_field :option_value, :id => "option_value0", :name => "product[option_value][]", :style => "display:none;" %>
+                </div>
+              </div>
+            </div>
+
+            <div id="option1" style="display:none;">
+              <div class="col-lg-4" id="option_add">
+                <div class="form-group">
+
+                    <input type="text" id="option_name" name="product[option_name][]" value="Color">
+                  
+                </div>
+              </div>
+              <div class="col-lg-8" id="option_add">
+                <div class="form-group">
+                  <div id="cm_seprated">
+                      <input id="txt_option_value1" type="text" value="" placeholder="Add a tag" />
+                      
+                  </div>
+
+                      <!-- <div class="col-lg-4">
+                        <label class="btn btn-default" onclick="remove_div1()">X</label>
+                      </div> -->
+
+                  <%= f.text_field :option_value, :id => "option_value1", :name => "product[option_value][]", :style => "display:none;" %>
+                </div>
+              </div>
+            </div>
+
+            <div id="option2" style="display:none;">
+              <div class="col-lg-4" id="option_add">
+                <div class="form-group">
+
+                    <input type="text" id="option_name" name="product[option_name][]" value="Material">
+                  
+                </div>
+              </div>
+              <div class="col-lg-8" id="option_add">
+                <div class="form-group">
+                  <div id="cm_seprated">
+                      <input id="txt_option_value2" type="text" value="" placeholder="Add a tag" />
+                  </div>
+
+                    
+                  <%= f.text_field :option_value, :id => "option_value2", :name => "product[option_value][]", :style => "display:none;" %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+            <input type="button" id="btn_add_option" class = "btn btn-default" value="Add another option"  onclick="add_option()">
+
+          </div>
+        </div>
+      </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Inventory & variants</h3>
+            <p>Manage inventory, and configure the options for selling this product.</p>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+              <% if @product.avatar_file_name.nil? %>
+                  <div>
+                    
+                  </div>  
+                <% else %>
+                  <div>
+                    <%= image_tag @product.avatar.url(:medium) %>
+                  </div>
+                <% end %>
+            </div>
+            <div class="form-group" id="inventory_chk">
+              <%= f.file_field :avatar %>
+            </div>
+
+         </div>
+    </div>
+<hr/>
+<div class="row">
+  <div class="col-md-4">
+      <h3>Facebook Page</h3>
+      <p>Choose your facebook page which you wish to upload your product.</p>
+  </div>
+  <div class="col-md-8">
+    <label class="btn btn-default" data-toggle="modal" data-target="#myModal">
+      Choose Page
+    </label>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Page Lists</h4>
+          </div>
+          <div class="modal-body">
+            
+              <div id="myDIV">
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  </div>
+</div>
+
+      <% end %>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  window.onload = function() {
+
+  var value =  document.getElementById("product_inventory_policy").value;
+        if(value == "Don't track inventory"){
+          document.getElementById("p_qty").style.visibility="hidden";
+          document.getElementById("product_inventory").style.visibility="hidden";
+        }
+        else if (value == "ZaySine track this product's inventory"){
+          document.getElementById("p_qty").style.visibility="visible";
+          document.getElementById("product_inventory").style.visibility="visible";
+        }
+};
+</script>
+
+<script>
+ 
+   
+    $("#product_inventory_policy").change(function(){   
+        var getID = this.id;
+        var value =  document.getElementById(this.id).value;
+
+        if(value == "Don't track inventory"){
+          document.getElementById("p_qty").style.visibility="hidden";
+          document.getElementById("product_inventory").style.visibility="hidden";
+          document.getElementById("div_allow_purchase").style.display="none";
+        }
+        else if (value == "ZaySine track this product's inventory"){
+          document.getElementById("p_qty").style.visibility="visible";
+          document.getElementById("product_inventory").style.visibility="visible";
+          document.getElementById("div_allow_purchase").style.display="inline";
+          
+        }
+    });
+ 
+</script>
+<%= javascript_include_tag 'jquery.min.js' %>
+<script>
+ 
+    $("#accept").change(function(){
+      if(this.checked){
+
+        document.getElementById("option").style.display="inline";
+
+        $('#txt_option_value0').on('focusout',function(){
+          var txt= this.value.replace(/[^a-zA-Z0-9\+\-\.\#]/g,'');
+          if(txt) {
+            document.getElementById("option_value0").value+=txt.toLowerCase()+"," ;
+            $(this).before('<span class="cm_seprated_txt">'+ txt.toLowerCase() +'</span>');
+          }
+          this.value="";
+        }).on('keyup',function( e ){
+          if (e.keyCode == 13) {
+            e.preventDefault();
+            return false;
+          } else
+          if(/(188|13)/.test(e.which)) $(this).focusout(); 
+        
+        });
+
+        
+        $('#cm_seprat`ed').on('click','.cm_seprated_txt',function(){
+           $(this).remove(); 
+        });
+
+
+        $('#txt_option_value1').on('focusout',function(){
+          var txt= this.value.replace(/[^a-zA-Z0-9\+\-\.\#]/g,'');
+          if(txt) {
+            document.getElementById("option_value1").value+=txt.toLowerCase()+"," ;
+            $(this).before('<span class="cm_seprated_txt">'+ txt.toLowerCase() +'</span>');
+          }
+          this.value="";
+        }).on('keyup',function( e ){
+          if (e.keyCode == 13) {
+            e.preventDefault();
+            return false;
+          } else
+          if(/(188|13)/.test(e.which)) $(this).focusout(); 
+        
+        });
+
+        
+        $('#cm_seprated').on('click','.cm_seprated_txt',function(){
+           $(this).remove(); 
+        });
+
+
+        $('#txt_option_value2').on('focusout',function(){
+          var txt= this.value.replace(/[^a-zA-Z0-9\+\-\.\#]/g,''); 
+          if(txt) {
+            document.getElementById("option_value2").value+=txt.toLowerCase()+"," ;
+            $(this).before('<span class="cm_seprated_txt">'+ txt.toLowerCase() +'</span>');
+          }
+          this.value="";
+        }).on('keyup',function( e ){
+          if (e.keyCode == 13) {
+            e.preventDefault();
+            return false;
+          } else
+          if(/(188|13)/.test(e.which)) $(this).focusout(); 
+        
+        });
+
+        
+        $('#cm_seprated').on('click','.cm_seprated_txt',function(){
+           $(this).remove(); 
+        });
+
+          }
+      else if (!this.checked){
+        document.getElementById("option").style.display="none";
+      }
+    });
+ </script>
+
+
+<script type="text/javascript">
+var i = 1;
+  function add_option() {
+    if(i == 2){
+      document.getElementById('btn_add_option').style.display= "none";    
+    }
+    document.getElementById('option' + i).style.display= "inline";
+    i++;
+  }
+
+  // function remove_div0() {document.getElementById('option0').style.display= "none";}
+  // function remove_div1() {document.getElementById('option1').style.display= "none";}
+  // function remove_div2() {document.getElementById('option2').style.display= "none";}
+</script>

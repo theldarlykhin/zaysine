@@ -1,0 +1,95 @@
+
+<div ng-app="plunker">
+   <div ng-controller="MainCtrl">
+
+    <h1>Merchants
+    </h1>  
+
+    <hr/>
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#">All Merchants</a>
+      </li>
+      <li>
+        <a href="/unapproved_merchants">Unexpire</a>
+      </li>
+    </ul>
+    <br/>
+
+     <div ng-init="merchants = <%= @merchants.to_json %>">
+     </div>
+                           <!-- filter with name -->
+
+     <div class="input-group">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Filter merchants <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a id="mer_store_name" href="#">By storename</a></li>
+          <li><a id="mer_email" href="#">By email</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+      <input type="text" class="form-control" id="normaltxt">
+       <input  ng-model="merchant.store_name" type="text" class="form-control"  id="mer_store_name_txt" style="display:none;" placeholder="by name">
+       <input ng-model="merchant.email" type="text" class="form-control" id="mer_email_txt" style="display:none;" placeholder="by email">
+    </div><!-- /input-group -->
+
+    
+
+    <div class="table_bg">
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Store name</th>
+          <th>Email</th>
+          <th>Since</th>
+          <th>Status</th>
+          <th colspan="1"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+           <tr ng-repeat="merchant in merchants | filter:{store_name: merchant.store_name, email: merchant.email}">
+            <td>{{merchant.store_name}}</td>
+            <td>{{merchant.email}}</td>
+            <td>{{merchant.created_at}}</td>
+            <td>
+              <a data-confirm="Are you sure you want to unexpire?" data-method="put" href="/unconfirm_merchant/{{merchant.id}}" rel="nofollow">Unexpire</a>
+              </td>
+            <td><a class="btn btn-danger btn-sm" data-confirm="Are you sure?" data-method="delete" href="/merchants/{{merchant.id}}" rel="nofollow">Destroy</a></td>
+          </tr>
+
+      </tbody>
+    </table>
+
+    <br>
+
+  </div>
+</div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    $('#mer_store_name').click(function() {
+ 
+        $('#mer_store_name_txt').show();
+        $('#normaltxt').hide();
+        $('#mer_email_txt').hide();
+        
+    });
+
+
+   $('#mer_email').click(function() {
+ 
+        $('#mer_email_txt').show();
+        $('#normaltxt').hide();
+        $('#mer_store_name_txt').hide();
+        
+    });
+
+
+
+
+</script>

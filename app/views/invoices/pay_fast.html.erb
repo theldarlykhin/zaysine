@@ -1,0 +1,56 @@
+
+
+<body  >
+
+<ul class="breadcrumb">
+  <li><a href="#"><h1>Account</h1></a></li>
+</ul>
+
+<div class="rows">
+  <div class="col-md-3">
+  	<h3>Billing Information</h3><br>
+  	<p>A summary of your payment information including any credit cards
+  	linked to your zaysine account</p>
+  </div>
+  <div class="col-md-9">
+  	<h3>Billing Information</h3><br/>  				
+	<form method="post" id="myform" action="https://demo2.2c2p.com/2C2PFrontEnd/RedirectV3/payment">
+            			<div style="display:none;">
+
+								<input type="text" id="version" name="version" value="6.0"/>
+								<input type="text" id="merchant_id" name="merchant_id" value="MM0003"/>
+								<input type="text" id="payment_description" name="payment_description"
+								value="" />
+								<input type="text" id="order_id" name="order_id" value="00000000000000123456" />
+								<input id="invoice_no" name="invoice_no" type="text" value="<%= @invoice_no %>" />
+								<input id="currency" name="currency" type="text" value=""/>
+								<input id="amount" name="amount" type="text" value="<%=  @amount %>"/>
+								<input type="text" id="customer_email" name="customer_email"
+								value="<%= @customer_email %>"/>
+								<input type="text" id="pay_category_id" name="pay_category_id" value=""/>
+								<input type="text" id="promotion" name="promotion" value=""/>
+								<input type="text" id="user_defined_1" name=" user_defined_1" value=""/>
+								<input type="text" id="user_defined_2" name=" user_defined_2" value=""/>
+								<input type="text" id="user_defined_3" name=" user_defined_3" value=""/>
+								<input type="text" id="user_defined_4" name=" user_defined_4" value=""/>
+								<input type="text" id="user_defined_5" name=" user_defined_5" value=""/>
+								<input type="text" id="result_url_1" name="result_url_1" value=""/>
+								<input type="text" id="result_url_2" name="result_url_2" value=""/>
+								<input type="hidden" id="hash_value" name="hash_value" value="<%=  @hash_value %>" />
+
+					    </div>
+					    Invoice number: <%= @invoice_no %><br>
+        				Email: <%= @customer_email %><br><br/><br/>
+
+						<input type="Submit" name="btnSubmit" value="Submit" id="btnSubmit" class="btn btn-default" />
+
+		</form>
+		
+  </div>
+
+</div>
+
+	
+
+
+</body>

@@ -1,0 +1,97 @@
+
+
+
+<div class="row">
+    <h1>General
+    <%= link_to 'Edit', edit_standardformat_path(@standardformat),  :class => "btn btn-default", :style => "float:right;" %>
+    </h1>  
+    <hr/>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Standard & formats</h3>
+            <p>Standard & formats are used to calcualte such things
+            as product price shipping weight and the time an order was placed</p>
+        </div>
+        <div class="col-md-8">
+
+
+
+                                <div class="form-group">
+
+                                <table style="width:100%">
+                                      <tr>
+                                        <td style="padding-right:10px;">
+                                           <label>Timezone:</label><br/>
+  										   <%= @standardformat.timezone %>
+                                        </td>
+                                        <td>
+                                        	<label>Currency:</label><br/>
+  											<%= @standardformat.currency %>
+                                        </td>
+                                      </tr>
+
+                                      <tr>
+                                        <td style="padding-right:10px;">
+                                             <label>Unitsystemstring:</label><br/>
+  											 <%= @standardformat.unitsystemstring %>
+                                        </td>
+                                      </tr>
+
+                                      <tr>
+                                        <td style="padding-right:10px;">
+                                            <label>Defaultweightunit:</label><br/>
+  											<%= @standardformat.defaultweightunit %>
+                                        </td>
+                                      </tr>
+                                     
+                                </table>
+                               
+                                </div>
+            </div>
+    </div>
+
+
+     <div class="row">
+        <div class="col-md-4">
+         
+        </div>
+        <div class="col-md-8">
+
+
+
+                                <div class="form-group">
+
+                                <table style="width:100%">
+                                <p>Edit order ID format (optional)</p>
+                                <h6>Order iD start at #00001 by default.You can add prefix or suffix here.</h6>
+                                      <tr>
+                                        <td style="padding-right:10px;">
+    									   <label>Prefix:</label><br/>
+  											<%= @standardformat.prefix %>
+                                        </td>
+                                        <td>
+                                            <label>Suffix:</label><br/>
+  											<%= @standardformat.suffix %>
+                                        </td>
+                                      </tr>
+                                     
+     
+                                     
+                                </table>
+                                 <p>Your Order ID will be appear as..</p>
+
+                               
+                                </div>
+            </div>
+    </div>
+
+
+
+
+</div>
+              
+ 
+
+                    

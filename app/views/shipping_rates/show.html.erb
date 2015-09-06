@@ -1,0 +1,26 @@
+<div class="row">
+    <h1>Shipping
+    <%= link_to 'Edit', edit_shipping_rate_path(@shipping_rate), :class => "btn btn-default", :style => "float:right;" %> 
+    </h1>  
+    <hr/>
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Shipping rates</h3>
+            <p>Configure shipping rates</p>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>Rate</label><br>
+                <%= @shipping_rate.rate %> MMK
+            </div>
+            <div class="form-group">
+                <label>Convenience fees</label><br>
+                <%= @shipping_rate.convenience_fee %> MMK
+            </div>
+            <div class="form-group">
+                <label>Pay method</label><br>
+                <%= @shipping_rate.paid_method %>
+            </div>
+        </div>
+    </div>
+</div>

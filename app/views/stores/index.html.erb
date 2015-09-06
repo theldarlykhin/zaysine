@@ -1,0 +1,153 @@
+
+<div ng-app="plunker">
+   <div ng-controller="MainCtrl">
+
+    <h1>Stores
+    </h1>  
+
+    <hr/>
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#">All Stores</a>
+      </li>
+    </ul>
+    <br/>
+
+     <div ng-init="stores = <%= @stores.to_json %>">
+     </div>
+                           <!-- filter with name -->
+
+     <div class="input-group">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Filter stores <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+         <li><a id="store_name" href="#">name</a></li>
+         <li><a id="store_phone" href="#">phone</a></li>
+         <li><a id="store_city" href="#">city</a></li>
+         <li><a id="store_postal" href="#">postal</a></li>
+         <li><a id="store_own" href="#">owner_name</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+        <input type="text" class="form-control" id="normaltxt">
+
+        <input  ng-model="store.name" type="text" class="form-control"  id="store_name_txt" style="display:none;" placeholder="by name">
+
+        <input  ng-model="store.phone" type="text" class="form-control"  id="store_phone_txt" style="display:none;" placeholder="by phone">
+
+        <input  ng-model="store.city" type="text" class="form-control"  id="store_city_txt" style="display:none;" placeholder="by city">
+
+        <input  ng-model="store.postal" type="text" class="form-control"  id="store_postal_txt" style="display:none;" placeholder="by postal">
+
+        <input  ng-model="store.owner_name" type="text" class="form-control"  id="store_own_txt" style="display:none;" placeholder="by merchant">
+
+
+    </div><!-- /input-group -->
+
+    
+
+    <div class="table_bg">
+
+    <table class="table">
+      <thead>
+        <tr>
+
+          <th>name</th>
+          <th>phone</th>
+          <th>street</th>
+          <th>city</th>
+          <th>postal</th>
+          <th>owner_name</th>
+          <th>customer_email</th>
+        </tr>
+      </thead>
+
+      <tbody>
+           <tr ng-repeat="store in stores | filter:{name: store.store_name, phone: store.phone, city: store.city, postal: store.postal, owner_name: store.owner_name}">
+            
+
+             <td>{{store.name}}</td>
+             <td>{{store.phone}}</td>
+             <td>{{store.street}}</td>
+             <td>{{store.city}}</td>
+             <td>{{store.postal}}</td>
+             <td>{{store.owner_name}}</td>
+             <td>{{store.customer_email}}</td>
+           
+          </tr>
+
+      </tbody>
+    </table>
+
+    <br>
+
+  </div>
+</div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    $('#store_name').click(function() {
+ 
+        $('#normaltxt').hide();
+        $('#store_name_txt').show();
+        $('#store_phone_txt').hide();
+        $('#store_city_txt').hide();
+        $('#store_postal_txt').hide(); 
+        $('#store_own_txt').hide();
+        
+    });
+
+
+    $('#store_phone').click(function() {
+ 
+        $('#normaltxt').hide();
+        $('#store_name_txt').hide();
+        $('#store_phone_txt').show();
+        $('#store_city_txt').hide();
+        $('#store_postal_txt').hide(); 
+        $('#store_own_txt').hide();
+        
+    });
+
+
+    $('#store_city').click(function() {
+ 
+        $('#normaltxt').hide();
+        $('#store_name_txt').hide();
+        $('#store_phone_txt').hide();
+        $('#store_city_txt').show();
+        $('#store_postal_txt').hide(); 
+        $('#store_own_txt').hide();
+        
+    });
+
+
+    $('#store_postal').click(function() {
+ 
+        $('#normaltxt').hide();
+        $('#store_name_txt').hide();
+        $('#store_phone_txt').hide();
+        $('#store_city_txt').hide();
+        $('#store_postal_txt').show(); 
+        $('#store_own_txt').hide();
+        
+    });
+
+
+    $('#store_own').click(function() {
+ 
+        $('#normaltxt').hide();
+        $('#store_name_txt').hide();
+        $('#store_phone_txt').hide();
+        $('#store_city_txt').hide();
+        $('#store_postal_txt').hide(); 
+        $('#store_own_txt').show();
+        
+    });
+
+
+
+
+</script>

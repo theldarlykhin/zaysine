@@ -1,0 +1,143 @@
+
+ <!----start-header---->
+    <div class="header">
+      <div class="container">
+        <div class="dropdown_box">
+           <select class="dropdown" tabindex="10" data-settings='{"wrapperClass":"metro"}'>
+                  <option value="0">English</option>  
+            <option value="1">Myanmar</option>
+           </select>
+           </div>
+           <div class="clearfix"></div>
+          <div class="header_top">
+        <div class="logo">
+          
+           <h1 id="mylogo"><span style="color:#40c0cb">Z</span>ay<span style="color:#40c0cb">S</span>ine</h1>
+         
+        </div>
+          <div class="menu">
+          <a class="toggleMenu" href="#"><%= image_tag "nav_icon.png" %> </a>
+          <ul class="nav" id="nav">
+            <li class="current"><a href="index.html">Home</a></li>
+            <li><a href="#">Sell Online</a></li>
+            <li><a href="#">Sell In Person</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Documentation</a></li>
+             <% if merchant_signed_in? %>
+                <li><%= link_to "Log out", destroy_merchant_session_path, :method => :delete  %></li>
+             <% else %>
+               <li><a href="/merchants/sign_in">Login</a></li>
+             <% end %>
+            
+            <li><a href="#">Contacts</a></li>                
+          </ul>
+        </div>              
+          <div class="clearfix"> </div>
+          <!----//End-top-nav---->
+       </div>
+      </div>
+    </div>
+    <!----//End-header---->
+    <div class="banner">
+
+                <div class="banner_right"><br/><br/><br/><br/>
+                  <h1>Welcome to <span class="color1">Z</span>ay<span class="color1">S</span>ine<span class="color1">.</span></h1>
+                  <h2>Running an online store has never been easier.</h2>
+                  <a href="/merchants/sign_up" title="Online Reservation" class="btn btn-primary btn-normal btn-inline " target="_self">Sign up today</a>
+                </div>
+
+      
+    </div>
+    <div class="banner_text">
+      <div class="container">
+        <ul class="banner_box">
+           <li class="box_desc">Create your ecommerce website with ZaySine.
+             <li class="box_but"><a href="/merchants/sign_up" title="Download" class="btn1 btn1-primary1" target="_self">Get Started</a></li>
+           <div class="clearfix"> </div>
+        </ul>
+      </div>
+    </div>
+   
+
+   <div class="footer">
+    <div class="container">
+      <div class="col-md-3 footer_grid">
+                  <h3 id="mylogo_text"><span style="color:#40c0cb">Z</span><span style="color:white;">ay</span><span style="color:#40c0cb">S</span><span style="color:white;">ine</span></h3>
+        <p>FcommerceMyanmar is ecommerce software builder for onlines sales service in Myanmar.</p>
+            <ul class="footer_links">
+              <li><a href="#">Read More</a></li>
+              <li><a href="#">About Us</a></li>
+            </ul>
+            <ul class="footer_social">
+        <li><a href=""><i class="fb"> </i> </a></li>
+        <li><a href=""><i class="tw"> </i> </a></li>
+        <li><a href=""><i class="db"> </i> </a></li>
+        <li><a href=""><i class="google"> </i> </a></li>
+        </ul>
+        <div class="copy">
+        <p>&copy; 2015 Produced an App for others is worth living. <a href="http://www.hnttechs.com" target="_blank"> Produced By H&Ttechs.</a></p>
+      </div>
+        </div>
+        <div class="col-md-3 footer_grid1">
+          <h3>Ecommerce</h3>
+          <ul class="list1 list2">    
+            <li class="list1_desc">
+              <p class="m_3">Sell Online</p><br/>
+              <p class="m_3">Features</p><br/>
+              <p class="m_3">Examples</p><br/>
+              <p class="m_3">Website builder</p><br/>
+              <p class="m_3">Online retail</p><br/>
+              <p class="m_3">Ecommerce website</p><br/>
+            </li>
+            <div class="clearfix"> </div>
+          </ul>
+        </div>
+
+        <div class="col-md-3 footer_grid1">
+          <h3><br/></h3>
+          <ul class="list1 list2">    
+            <li class="list1_desc">
+                <p class="m_3">Store design</p><br/>
+                <p class="m_3">Shopping cart</p><br/>
+                <p class="m_3">Ecommerce hosting</p><br/>
+                <p class="m_3">Mobile commerce</p><br/>
+                <p class="m_3">Ecommerce software</p><br/>
+                <p class="m_3">FAQ</p><br/>
+            </li>
+            <div class="clearfix"> </div>
+          </ul>
+        </div>
+
+
+
+
+        <div class="col-md-3 footer_grid1">
+          <h3>Help</h3>
+          <ul class="list1 list2">    
+            <li class="list1_desc">
+                 <p class="m_3">24/7 Support</p><br/>
+                 <p class="m_3">Shopify Docs</p><br/>
+                 <p class="m_3">Blog</p><br/>
+                 <p class="m_3">Ecommerce Forums</p><br/>
+                 <p class="m_3">API Docs</p><br/>
+            </li>
+            <div class="clearfix"> </div>
+          </ul>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+    
+      
+       
+    </div>
+   </div>
+  

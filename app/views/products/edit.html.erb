@@ -1,0 +1,185 @@
+
+      <%= form_for @product, :html => { :multipart => true} do |f| %>
+
+        <% if @product.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+            <ul>
+            <% @product.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+<div class="row">
+    <h1>Add a Product
+    <%= f.submit 'Save' , :class => "btn btn-default", :style => "float:right;" %>
+    </h1>  
+    <hr/>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Product details</h3>
+            <p>Write a name and description, and provide a type and vendor to categories the product.</p>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+            <!--<%= current_merchant.store_name %> -->
+              <%= f.label :product_name %><br>
+              <%= f.text_field :product_name, :class => "form-control" %>
+            </div>
+            <div class="form-group">
+              <label>Information provide in FB</label><br>
+              <%= f.text_area :desc, :class => "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <table style="width:100%">
+                <tr>
+                  <td style="padding-right:10px;">
+                    <%= f.label :category_id%><br>
+                    <%= f.select :category_id, Category.all.collect { |c| [c.category_name, c.id] }%>
+                  </td>
+                  <td>
+                    <%= f.label :brand_id %><br>
+                    <%= f.select :brand_id, Brand.all.collect { |c| [c.brand_name, c.id] } %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+        </div>
+    </div>
+    <hr/>
+
+        <div class="row">
+        <div class="col-md-4">
+            <h3>Inventory & variants</h3>
+            <p>Manage inventory, and configure the options for selling this product.</p>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group" id="inventory_chk">
+              <%= f.label :price %><br>
+              <%= f.text_field :price, :placeholder => "0.00" %>
+            </div>
+            <div class="form-group" id="inventory_chk">
+              <%= f.label :SKU %> (Stock Keeping Unit)<br>
+              <%= f.text_field :sku %>
+            </div>
+            <div class="form-group">
+              <table style="width:100%">
+                <tr>
+                  <td style="padding-right:10px;width:30%;"  id="inventory_chk">
+                    <%= f.label :inventory_policy %><br/>
+                    <%= f.select(:inventory_policy, Product::INVENTORY_POLICY) %>
+                  </td>
+                  <td  id="inventory_chk">
+                    <%= f.label :quantity, :id => "p_qty" , :style => "visibility:hidden;" %><br>
+                    <%= f.text_field :inventory, :style => "visibility:hidden;" %>
+                  </td>
+                </tr>
+              </table>
+              
+            </div>
+            <div class="form-group" id="div_allow_purchase" style="display:none;">
+              <%= check_box_tag 'allow_purchase' %>Allow customers to purchase this product when it's out of stock
+            </div>
+
+
+          <div class="form-group" style="height:30%;">
+            <div class="table-responsive">
+              <table>
+              
+                <tr>
+                  <% @product.option_name.each do |op_name| %>
+                    <th style="width:100px;"><%= f.label op_name rescue "-" %></th>
+                 <% end %>
+                </tr>
+                <tr>
+                 <% @product.option_value.each do |op_value| %>
+                    <td><%= op_value rescue "-" %></td>
+                 <% end %>
+                </tr>
+                </table>
+            </div>
+          </div>
+
+          </div>
+
+
+        </div>
+      </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Inventory & variants</h3>
+            <p>Manage inventory, and configure the options for selling this product.</p>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+              <% if @product.avatar_file_name.nil? %>
+                  <div>
+                    
+                  </div>  
+                <% else %>
+                  <div>
+                    <%= image_tag @product.avatar.url(:medium) %>
+                  </div>
+                <% end %>
+            </div>
+            <div class="form-group" id="inventory_chk">
+              <%= f.file_field :avatar %>
+            </div>
+
+         </div>
+    </div>
+
+      <% end %>
+  </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+  window.onload = function() {
+
+  var value =  document.getElementById("product_inventory_policy").value;
+        if(value == "Don't track inventory"){
+          document.getElementById("p_qty").style.visibility="hidden";
+          document.getElementById("product_inventory").style.visibility="hidden";
+        }
+        else if (value == "ZaySine track this product's inventory"){
+          document.getElementById("p_qty").style.visibility="visible";
+          document.getElementById("product_inventory").style.visibility="visible";
+        }
+};
+</script>
+
+<script>
+ 
+   
+    $("#product_inventory_policy").change(function(){   
+        var getID = this.id;
+        var value =  document.getElementById(this.id).value;
+
+        if(value == "Don't track inventory"){
+          document.getElementById("p_qty").style.visibility="hidden";
+          document.getElementById("product_inventory").style.visibility="hidden";
+          document.getElementById("div_allow_purchase").style.display="none";
+        }
+        else if (value == "ZaySine track this product's inventory"){
+          document.getElementById("p_qty").style.visibility="visible";
+          document.getElementById("product_inventory").style.visibility="visible";
+          document.getElementById("div_allow_purchase").style.display="inline";
+          
+        }
+    });
+ 
+</script>
+
+
+

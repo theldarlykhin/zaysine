@@ -1,0 +1,96 @@
+
+
+<div ng-app="plunker">
+   <div ng-controller="MainCtrl">
+
+    <h1>Products
+    <%= link_to 'Add a Product', new_product_path, {:class => "btn btn-info", :id => "btn_new_product"} %>
+    </h1>  
+
+    <hr/>
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#">All Products</a>
+      </li>
+    </ul>
+    <br/>
+
+     <div ng-init="products = <%= @products.to_json %>">
+     </div>
+                           <!-- filter with name -->
+
+     <div class="input-group">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Filter products <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a id="product_name" href="#">By product name</a></li>
+          <li><a id="brand_name" href="#">By brand name</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+      <input type="text" class="form-control" id="normaltxt">
+       <input  ng-model="product.product_name" type="text" class="form-control"  id="product_name_txt" style="display:none;" placeholder="by product name">
+       <input ng-model="product.brand.brand_name" type="text" class="form-control" id="brand_name_txt" style="display:none;" placeholder="by brand name">
+    </div><!-- /input-group -->
+
+    <div class="table_bg">
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Product Name</th>
+          <th>Brand</th>
+          <th>Inventory</th>
+          <th>Price</th>
+          <th>Store Name</th>
+          <th colspan="1"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="product in products | filter:{product_name: product.product_name, brand: product.brand.brand_name}">
+            
+            <td></td>
+            <td>{{product.product_name}}</td>
+            <td>{{product.brand.brand_name}}</td>
+            <td>{{product.inventory}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.store_id}}</td>
+            <td><a href="/products/{{product.id}}/edit">Edit</a></td>
+            <td><a data-confirm="Are you sure?" data-method="delete" href="/products/{{product.id}}" rel="nofollow">Remove</a></td>
+           
+          </tr>
+      </tbody>
+    </table>
+
+    <br>
+
+  </div>
+</div>
+
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    $('#product_name').click(function() {
+ 
+        $('#normaltxt').hide();
+        $('#product_name_txt').show();
+        $('#brand_name_txt').hide();
+        
+    });
+
+
+    $('#brand_name').click(function() {
+ 
+        $('#normaltxt').hide();
+        $('#product_name_txt').hide();
+        $('#brand_name_txt').show();
+        
+    });
+
+
+</script>

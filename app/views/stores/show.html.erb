@@ -1,0 +1,95 @@
+
+
+<div class="row">
+    <h1>General
+     <%= link_to 'Edit', edit_store_path(@store), :class => "btn btn-default", :style => "float:right;" %>
+    </h1>  
+    <hr/>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Store detail</h3>
+            <p>Your store information.</p>
+        </div>
+        <div class="col-md-8">
+
+
+                                 <div class="form-group">
+                                        <label>Name</label><br>
+                                        <%= @store.owner_name %>
+                                </div>
+
+
+                                <div class="form-group">
+
+                                <table style="width:100%">
+                                      <tr>
+                                        <td style="padding-right:10px;">
+                                            <label>Merchant</label><br>
+                                             <%= @store.merchant.email %>
+                                        </td>
+                                        <td>
+                                              <label>CustomerEmail</label><br>
+                                             <%= @store.customer_email %>
+                                        </td>
+                                      </tr>
+                                     
+                                </table>
+                               
+                                </div>
+            </div>
+    </div>
+    <hr/>
+      <div class="row">
+        <div class="col-md-4">
+            <h3>Store address</h3>
+            <p>This address will appear<br/> on your invoice and will be used<br>
+             to calculate your shipping rates.</p>
+        </div>
+        <div class="col-md-8">
+
+
+                                 <div class="form-group">
+                                          <label>Name</label><br>
+                                          <%= @store.name %>
+                                </div>
+
+
+                                <div class="form-group">
+                                          <label>Phone</label><br>
+                                          <%= @store.phone %>
+                                </div>
+
+                                <div class="form-group">
+                                          <label>Street</label><br>
+                                          <%= @store.street %>
+                                </div>
+
+                                <div class="form-group">
+
+                                <table style="width:100%">
+                                      <tr>
+                                        <td style="padding-right:10px;">
+                                          <label>City</label><br>
+                                          <%= @store.city %>
+                                        </td>
+                                        <td>
+                                          <label>Postal</label><br>
+                                          <%= @store.postal %>
+                                        </td>
+                                      </tr>
+                                     
+                                </table>
+                               
+                                </div>
+            </div>
+    </div>
+
+
+
+</div>
+              
+ 
+
+                    

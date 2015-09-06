@@ -1,0 +1,101 @@
+
+<div ng-app="plunker">
+   <div ng-controller="MainCtrl">
+
+    <h1>Customers
+    <%= link_to 'Add a customer', new_customer_path, :class => "btn btn-primary", :style => "float:right;" %>
+    </h1>  
+
+    <hr/>
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#">All Customers</a>
+      </li>
+    </ul>
+    <br/>
+
+     <div ng-init="customers = <%= @customers.to_json %>">
+     </div>
+                           <!-- filter with name -->
+
+     <div class="input-group">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Filter customers <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a id="cus_fulname" href="#">By name</a></li>
+          <li><a id="cus_location" href="#">By location</a></li>
+          <li><a id="cus_totalspent" href="#">By totalspents</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+      <input type="text" class="form-control" id="normaltxt">
+       <input  ng-model="customer.full_name" type="text" class="form-control"  id="cus_fulname_txt" style="display:none;" placeholder="by name">
+       <input ng-model="customer.location" type="text" class="form-control" id="cus_location_txt" style="display:none;" placeholder="by location">
+       <input ng-model="customer.total_spent" type="text" class="form-control"  id="cus_totalspent_txt" style="display:none;" placeholder="by total spent">
+    </div><!-- /input-group -->
+
+    
+
+    <div class="table_bg">
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Total spent</th>
+          <th colspan="1"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+           <tr ng-repeat="customer in customers | filter:{full_name: customer.full_name, location: customer.location, total_spent: customer.total_spent}">
+            <td>{{customer.full_name}}</td>
+            <td>{{customer.location}}</td>
+            <td>{{customer.total_spent}}</td>
+            <td><a class="btn btn-danger btn-sm" data-confirm="Are you sure?" data-method="delete" href="/customers/{{customer.id}}" rel="nofollow">Destroy</a></td>
+          </tr>
+
+      </tbody>
+    </table>
+
+    <br>
+
+  </div>
+</div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    $('#cus_fulname').click(function() {
+ 
+        $('#cus_fulname_txt').show();
+        $('#normaltxt').hide();
+        $('#cus_location_txt').hide();
+        $('#cus_totalspent_txt').hide();
+        
+    });
+
+
+   $('#cus_location').click(function() {
+ 
+        $('#cus_location_txt').show();
+        $('#normaltxt').hide();
+        $('#cus_fulname_txt').hide();
+        $('#cus_totalspent_txt').hide();
+        
+    });
+
+
+   $('#cus_totalspent').click(function() {
+ 
+        $('#cus_totalspent_txt').show();
+        $('#normaltxt').hide();
+        $('#cus_location_txt').hide();
+        $('#cus_fulname_txt').hide();
+        
+    });
+
+
+</script>

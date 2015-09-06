@@ -1,0 +1,69 @@
+<%= form_for(@shipping_info) do |f| %>
+  <% if @shipping_info.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@shipping_info.errors.count, "error") %> prohibited this shipping_info from being saved:</h2>
+
+      <ul>
+      <% @shipping_info.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :full_name %><br>
+    <%= f.text_field :full_name, :class =>"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :contact_number %><br>
+    <%= f.text_field :contact_number, :class =>"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :email %><br>
+    <%= f.text_field :email, :class =>"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :city %><br>
+    <%= f.select(:city, ShippingInfo::CITY) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :township %><br>
+    <%= f.select(:township, ShippingInfo::TOWNSHIP) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :shipping_address %><br>
+    <%= f.text_area :shipping_address, :class =>"form-control" %>
+  </div><br/>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+
+
+
+<style type="text/css">
+  
+#shipping_info_city, #shipping_info_township {
+    display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+
+</style>

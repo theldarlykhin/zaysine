@@ -1,0 +1,93 @@
+<h1>Pay Fast Product</h1>
+
+ <div class="table-responsive">
+<table class="table">
+  <thead>
+    <tr>
+       <th>invoice_number</th>
+       <th>customer_email</th>
+       <th>item_name</th>
+       <th>price</th>
+       <th></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @invoices.each do |invoice| %>
+      <tr>
+        <td><%= invoice.invoice_number %></td>
+        <td><%= invoice.customer_email %></td>
+        <td><%= invoice.item_name %></td>
+        <td><%= invoice.price %></td>
+
+        <td>
+          <p id="url<%= invoice.id %>" style="display:none;color:#337ab7;"><%= root_url %>payfast/<%= invoice.random_id %></p>
+
+              <textarea name="box-content<%= invoice.id %>" id="box-content<%= invoice.id %>" rows="5" cols="70" style="display:none;">
+              <%= root_url %>payfast/<%= invoice.random_id %>
+              </textarea>
+
+        </td>
+        <td>
+        <input type="button" id="copy<%= invoice.id %>" name="copy<%= invoice.id %>" value="Pay Fast">
+        </td>
+        <td><%= link_to 'Edit', edit_invoice_path(invoice) %></td>
+        <td><%= link_to 'Destroy', invoice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<br>
+
+  
+
+
+<%= link_to 'New Payfast', new_invoice_path, :class =>"btn btn-primary" %>
+
+
+
+
+<!--  -->
+<%= javascript_include_tag 'ZeroClipboard.js' %>
+<% @invoices.each do |invoice| %>
+
+ 
+
+    <script language="JavaScript">
+
+
+        $('#copy<%= invoice.id %>').click(function(){
+
+
+
+          var addressValue = $(".addressClick<%= invoice.id %>").attr("value");
+          $("#url<%= invoice.id %>").show();
+          document.getElementById('copy<%= invoice.id %>').value = "Copy";
+
+        ZeroClipboard.setMoviePath('/assets/ZeroClipboard.swf');
+        //create client
+        var clip = new ZeroClipboard.Client();
+        //event
+        clip.addEventListener('mousedown',function() {
+          clip.setText(document.getElementById('box-content<%= invoice.id %>').value);
+        });
+        clip.addEventListener('complete',function(client,text) {
+          alert('copied: ' + text);
+        });
+        //glue it to the button
+        clip.glue('copy<%= invoice.id %>');
+
+
+
+        });
+
+
+
+
+    </script>
+
+
+
+<% end %>

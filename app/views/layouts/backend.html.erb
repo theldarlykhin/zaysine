@@ -1,0 +1,196 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>ZaySine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+ 
+  
+    <!-- Custom CSS -->
+    <%= stylesheet_link_tag    'bootstrap.min.css' %>
+    <%= stylesheet_link_tag    'bootstrap.css' %>
+
+    <%= stylesheet_link_tag    'sb-admin.css' %>
+
+    <!-- Morris Charts CSS -->
+    <%= stylesheet_link_tag    'morris.css' %>
+
+    <!-- Custom Fonts -->
+    <%= stylesheet_link_tag    'font-awesome.min.css' %>
+
+
+    
+    <%= javascript_include_tag 'jquery.js' %>
+    <%= javascript_include_tag 'jquery.min.js' %>
+
+    <%= javascript_include_tag 'angular.min.js' %>
+    <%= javascript_include_tag 'app.js' %>
+
+    <%= javascript_include_tag 'jquery.js' %>
+    <%= javascript_include_tag 'jquery_ujs.js' %>
+
+    <!-- Bootstrap Core JavaScript -->
+    <%= javascript_include_tag 'bootstrap.min.js' %>
+
+    <!-- Morris Charts JavaScript -->
+    <%= javascript_include_tag 'raphael.min.js' %>
+    <%= javascript_include_tag 'morris.min.js' %>
+    <%= javascript_include_tag 'morris-data.js' %>
+
+    <%= javascript_include_tag 'nicEdit-latest.js' %>
+
+    <script type="text/javascript">
+//<![CDATA[
+  bkLib.onDomLoaded(function() {
+        new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','subscript','superscript','html','image']}).panelInstance('product_desc');
+  });
+  //]]>
+  </script>
+
+
+  <%= csrf_meta_tags %>
+
+
+</head>
+<body>
+
+   <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html" style="font-size:30px;"><span style="color:#40c0cb">Z</span><span style="color:white;">ay</span><span style="color:#40c0cb">S</span><span style="color:white;">ine</span></a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav" >
+
+                <li>
+                    <a>
+                         <% if merchant_signed_in? %>
+                                <%= current_merchant.email %>
+                        <% end %>
+                       <% if admin_signed_in? %>
+                                <%= current_admin.email %>
+                        <% end %>
+                    </a>
+                </li>
+                <li>
+                            <% if merchant_signed_in? %>
+                                <%= link_to "Log out", destroy_merchant_session_path, :method => :delete  %>
+                            <% end %>
+                            <% if admin_signed_in? %>
+                                <%= link_to "Log out", destroy_admin_session_path, :method => :delete  %>
+                            <% end %>
+               
+                </li>
+                
+
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav" id="cus_side">
+
+
+
+                    <% if admin_signed_in? %>
+                       
+                        <li>
+                            <%= link_to 'Merchants', merchants_path %>
+                        </li>
+                         <li>
+                            <%= link_to 'Stores', stores_path %>
+                        </li>
+                         <li>
+                            <a href="/categories"> Categories</a>
+                        </li>
+                  
+
+                    <% end %>
+
+                    <% if merchant_signed_in? %>
+                        <li class="active">
+                            <a href="/dashboards"> Dashboard</a>
+                        </li>
+                        <li>
+                            <%= link_to 'General', new_standardformat_path    %>
+                        </li>
+                        <li>
+                            <a href="/orders"> Orders</a>
+                        </li>
+                        <li>
+                            <a href="/products"> Products</a>
+                        </li>
+                       
+                        <li>
+                            <a href="/invoices">Pay fast</a>
+                        </li>
+                        <li>
+                            <% @my_stores.each do |my_store| %>
+                                <%= link_to 'Store', edit_store_path(my_store) %>
+                            <% end %>
+                        </li>
+                        <li>
+                            <a href="/shipping_rates/new">Fees</a>
+                        </li>
+                         <li>
+
+                             <a href="https://www.facebook.com/dialog/pagetab?app_id=404381443062412&app_data={'store': '1'}&redirect_uri=https://www.zaysine.com/dashboards">Add FacebookPage</a>
+                        </li>
+                    <% end %>
+                   
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper" style="height:1300px;">
+
+            <div class="container-fluid">
+
+            <%= yield %>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+
+
+</body>
+
+</html>
+
+
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '404479733052583',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
